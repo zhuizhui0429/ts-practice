@@ -19,6 +19,34 @@ ParseEqual<Q>
 type res = ParseQuery<'a=1&b=2&c=3&a=3&a=6'>
 
 
+function GeneratePromise(count:number){
+    const proArr:Promise<number>[] = []
+    for(let i=0;i<count;i++){
+        proArr.push(new Promise((resolve)=>{
+            setTimeout(()=>{
+                resolve(Math.random())
+            },3000*Math.random())
+        }))
+    }
+    return proArr
+}
+
+const states = Promise.race(GeneratePromise(4))
+
+type tuple = [1,2,3,4,5]
+type obj = {
+    [key in keyof tuple]:tuple[key]
+}
+
+
+declare function Currying<T extends (...args:any)=>any>(func:T):CurryParams<Parameters<T>>
+declare function test(name:string,age:number,arr:number[])
+
+type res1 = Parameters<typeof GeneratePromise>
+
+type CurryParams<Tuple> = Tuple extends [infer P,...infer Rest] ? (a:P)=>CurryParams<Rest> : void
+
+const func = Currying(test)
 
 export {}
 
