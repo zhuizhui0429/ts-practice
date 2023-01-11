@@ -9,9 +9,9 @@ type WordChars =
 
 type CapitalizeWords<
     Str extends string,
-    ShouldCapitalize extends boolean = true
+    ShouldUppercase extends boolean = true
 > = Str extends `${infer Char}${infer Rest}`
-    ? `${ShouldCapitalize extends true ? Uppercase<Char> : Char}${CapitalizeWords<
+    ? `${ShouldUppercase extends true ? Uppercase<Char> : Char}${CapitalizeWords<
         Rest,
         Char extends WordChars ? false : true
     >}`
